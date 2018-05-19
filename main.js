@@ -5,7 +5,7 @@
 
 	//adding notes
 	addNote.addEventListener('click', createNote);
-	function createNote(left, top, text) {
+	function createNote(left, top, text, offsetW, offsetH) {
 		let node = document.createElement('div'),
 			textarea = document.createElement('textarea'),
 			bar = document.createElement('div'),
@@ -25,6 +25,8 @@
 			node.style.left = left;
 			node.style.top = top;
 			textarea.textContent = text;
+			textarea.style.width = offsetW-4 +"px";
+			textarea.style.height = offsetH-4 +"px";
 		}
 		app.appendChild(node);
 		node.addEventListener('mousedown', makeDraggable);
@@ -47,8 +49,16 @@
 		} else if (e.target.nodeName === 'TEXTAREA') {
 			window.addEventListener('keyup', function() {
 				save();
+			});
+			window.addEventListener('mousemove', saveWidth)
+			window.addEventListener('mouseup', function() {
+				window.removeEventListener('mousemove', saveWidth);
 			})
 		}
+	}
+	
+	function saveWidth() {
+		save();
 	}
 	
 	//disable select while dragging
@@ -85,7 +95,9 @@
 				id: i,
 				left: app.children[i].style.left,
 				top: app.children[i].style.top,
-				text: app.children[i].children[1].value
+				text: app.children[i].children[1].value,
+				elementWidth: app.children[i].children[1].offsetWidth,
+				elementHeight: app.children[i].children[1].offsetHeight
 			});
 		}
 		localStorage.setItem('notes', JSON.stringify(notes));
@@ -96,7 +108,7 @@
 		let notesLoad = JSON.parse(localStorage.getItem('notes'));
 		if (notesLoad != null && notesLoad != undefined) {
 			for (let i = 0; i < notesLoad.length; i++) {
-				createNote(notesLoad[i].left, notesLoad[i].top, notesLoad[i].text);
+				createNote(notesLoad[i].left, notesLoad[i].top, notesLoad[i].text, notesLoad[i].elementWidth, notesLoad[i].elementHeight);
 			}
 		}
 	}
