@@ -1,7 +1,9 @@
 (function () {
 	const addNote = document.getElementById('add'),
 		app = document.getElementById('app');
-	let offsetX, offsetY, currentItem;
+	let offsetX, offsetY, currentItem,
+		windowWidth = document.body.scrollWidth,
+		windowHeight = document.body.scrollHeight;
 
 	//adding notes
 	addNote.addEventListener('click', createNote);
