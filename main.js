@@ -1,10 +1,11 @@
 (function () {
+	'use strict';
 	const addNote = document.getElementById('add'),
-		app = document.getElementById('app');
+		  app = document.getElementById('app');
 	let offsetX, offsetY, currentItem,
 		windowWidth = document.body.scrollWidth,
 		windowHeight = document.body.scrollHeight;
-
+	
 	//adding notes
 	addNote.addEventListener('click', createNote);
 	function createNote(left, top, text, offsetW, offsetH) {
@@ -27,8 +28,13 @@
 			node.style.left = left;
 			node.style.top = top;
 			textarea.textContent = text;
-			textarea.style.width = offsetW-4 +"px";
-			textarea.style.height = offsetH-4 +"px";
+			if(typeof InstallTrigger !== 'undefined') {
+				textarea.style.width = offsetW-2 +"px";
+				textarea.style.height = offsetH +"px";
+			} else {
+				textarea.style.width = offsetW-4 +"px";
+				textarea.style.height = offsetH-4 +"px";
+			}
 		}
 		app.appendChild(node);
 		node.addEventListener('mousedown', makeDraggable);
