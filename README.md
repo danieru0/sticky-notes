@@ -1,3 +1,3 @@
 # sticky-notes
 
-LIVE: https://elosiktv.github.io/sticky-notes/
+LIVE: https://danieru0.github.io/sticky-notes/
